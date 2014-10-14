@@ -1,0 +1,7 @@
+name: delisp
+version: 0.1.0
+author: Damien Ciabrini <damien.ciabrini@gmail.com>
+description: A small Lisp interpreter written in Dart
+homepage: https://github.com/dciabrin/delisp
+dependencies:
+  petitparser: any
