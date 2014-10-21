@@ -5,3 +5,4 @@ description: A small Lisp interpreter written in Dart
 homepage: https://github.com/dciabrin/delisp
 dependencies:
   petitparser: any
+  unittest: any

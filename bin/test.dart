@@ -13,6 +13,8 @@ void main() {
     print(expr.isSuccess?eval(expr.value, Environment.global):expr);
   };
 
+  // Evaluation of simple forms, output to the console
+  // Unit tests are available in a dedicated directory
   rep("(+ 1 2)");
   rep("(= 0 0)");
 
