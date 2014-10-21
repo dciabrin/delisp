@@ -4,18 +4,18 @@ class Environment {
   static final Environment global=new Environment();
   
   static init() {
-    global.funcs[new Symbol("+")] = new DLFunction.withNative(
-        [new Symbol("A"), new Symbol("B")],
-        (a,b) {return a + b;});              
+    global.funcs[new DLSymbol("+")] = new DLFunction.withNative(
+        [new DLSymbol("A"), new DLSymbol("B")],
+        (a,b) {return a + b;});
   }
   
-  Map<Symbol,dynamic> vars;
-  Map<Symbol,DLFunction> funcs;
+  Map<DLSymbol,dynamic> vars;
+  Map<DLSymbol,DLFunction> funcs;
   Environment next;
 
   Environment(){
-    vars=new Map<Symbol,dynamic>();
-    funcs=new Map<Symbol,DLFunction>();
+    vars=new Map<DLSymbol,dynamic>();
+    funcs=new Map<DLSymbol,DLFunction>();
     next=null;
   }
 }

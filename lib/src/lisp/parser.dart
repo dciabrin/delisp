@@ -65,11 +65,13 @@ class LispParser extends LispGrammar {
 
   onNumber(elem) => int.parse(elem);
   
-  onSymbol(elem) => new Symbol(elem);
+  onSymbol(elem) => new DLSymbol(elem);
     
   onList(elem) {
     // strip ['(', xxx, ')']
-    return (elem is List) ? elem[1] : elem;
+    var list=elem[1];
+    var a=(list==null)?DLSymbol.NIL:list;
+    return a;
   }
   
   onInnerList(elem) {
@@ -82,24 +84,20 @@ class LispParser extends LispGrammar {
         return new Cons(elem[0], elem[1]);
       }
     } else {
-      return new Cons(elem, Symbol.NIL);
+      return new Cons(elem, DLSymbol.NIL);
     }
   }
   
   onQuote(elem) {
-    if(elem[1]=="()") {
-      return Symbol.NIL;
-    } else {
-      return new Cons(new Symbol("\\\'"), new Cons(elem[1], Symbol.NIL));
-    }
+    return new Cons(new DLSymbol("quote"), new Cons(elem[1], DLSymbol.NIL));
   }
  
   onQuasiQuote(elem) => 
-    new Cons(new Symbol("\\\`"), new Cons(elem[1], Symbol.NIL));
+    new Cons(new DLSymbol("\\\`"), new Cons(elem[1], DLSymbol.NIL));
 
   onUnquote(elem) => 
-    new Cons(new Symbol("\\\,"), new Cons(elem[1], Symbol.NIL));
+    new Cons(new DLSymbol("\\\,"), new Cons(elem[1], DLSymbol.NIL));
 
   onSplice(elem) => 
-    new Cons(new Symbol("\\\,@"), new Cons(elem[1], Symbol.NIL));
+    new Cons(new DLSymbol("\\\,@"), new Cons(elem[1], DLSymbol.NIL));
 }
