@@ -33,6 +33,13 @@ class Cons {
   Cons(this.car, this.cdr);
 
   @override
+  bool operator ==(obj) {
+    if (obj is! Cons) return false;
+    Cons other=obj;
+    return this.car==other.car && this.cdr==other.cdr;
+  }
+
+  @override
   String toString() {
     var buf = new StringBuffer();
     buf.write("(");

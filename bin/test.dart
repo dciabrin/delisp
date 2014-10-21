@@ -2,32 +2,26 @@ import "package:delisp/delisp.dart";
 
 void main() {
 
+  Environment.init();
+  initKeywords();
+
   var lp = new LispParser();
   test(x) => print(lp.parse(x)); 
+  rep(x) {
+    print("> "+x);
+    var expr=lp.parse(x);
+    print(expr.isSuccess?eval(expr.value, Environment.global):expr);
+  };
 
-  Environment.init();
+  rep("(+ 1 2)");
+  rep("(= 0 0)");
+
+  rep("(progn 'a 'b 'c)");
   
-  // lists
-  test("'()");
-  test("nil");
-  test("(a)");
-  test("(a . '()");
-  test("(a b)");
-  test("(a b . nil)");
-  test("(awef . bff)");
-  test("(a b e . b)");
-  test("'(a b)");
-  test("`(foo ,(bar) e)");
-  test("`(a ,@(gee hux)");
+  rep("(if (= 1 1) 'yes 'no)");
+  rep("(if nil 'e 1 2 3)");
   
-  // strings
-  test('"foo"');
-  test('"foo\\nbar"');
-  
-  // READ-EVAL-PRINT... 
-  var expr=lp.parse("(+ 1 2)");
-  print(expr);
-  var value=eval(expr.value, Environment.global);
-  print(value);
-  // ONE STEP AWAY FROM THE REPL :)
+  rep("(setq x 140)");
+  rep("(defun adder (a b) (+ (+ a b) x))");
+  rep("(adder 1 2)");
 }
