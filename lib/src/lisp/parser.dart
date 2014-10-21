@@ -17,7 +17,7 @@ class LispGrammar extends CompositeParser {
     );
 
 
-    def('list', char('(') & ref('innerlist') & char(')'));
+    def('list', char('(') & ref('innerlist').optional() & char(')').trim());
 
     def('innerlist', 
           (ref('atom') & ref('dot') & ref('atom')) 
@@ -26,7 +26,7 @@ class LispGrammar extends CompositeParser {
 
     def('dot', char('.').trim());
 
-    def('quote', char('\'') & (string("()") | ref('atom')));
+    def('quote', char('\'') & ref('atom'));
     def('quasiquote', char('`') & ref('atom'));
     def('splice', string(',@') & ref('list'));
     def('unquote', char(',') & ref('list'));
@@ -43,11 +43,6 @@ class LispGrammar extends CompositeParser {
     def('symbol', (pattern('a-zA-Z!#\$%&*/:<=>?@\\^_|~+-') & pattern('a-zA-Z0-9!#\$%&*/:<=>?@\\^_|~+-').star()).flatten().trim());
 
     def('number',digit().plus().flatten().trim());
-  }
-
-  /// Defines a bracketed reference.
-  Parser bracket(String brackets, String reference) {
-    return char(brackets[0]).seq(ref(reference)).seq(char(brackets[1]));
   }
 }
 
